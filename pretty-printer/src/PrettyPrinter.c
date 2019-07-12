@@ -181,7 +181,7 @@ PrettyPrintingOptions* createDefaultPrettyPrintingOptions(void)
     defaultOptions->inlineComment = TRUE;
     defaultOptions->oneLineCdata = FALSE;
     defaultOptions->inlineCdata = TRUE;
-    defaultOptions->emptyNodeStripping = TRUE;
+    defaultOptions->emptyNodeStripping = FALSE;
     defaultOptions->emptyNodeStrippingSpace = TRUE;
     defaultOptions->forceEmptyNodeSplit = FALSE;
     defaultOptions->trimLeadingWhites = TRUE;
