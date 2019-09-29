@@ -26,19 +26,21 @@
 ; Do a Cyclic Redundancy Check to make sure the installer was not corrupted by the download
 CRCCheck force
 RequestExecutionLevel highest ; set execution level for Windows Vista
+; NSIS 3 Unicode support
+Unicode true
 
 ;;;;;;;;;;;;;;;;;;;
 ; helper defines  ;
 ;;;;;;;;;;;;;;;;;;;
 !define PRODUCT_NAME "Geany-Plugins"
-!define PRODUCT_VERSION "1.36"
-!define PRODUCT_VERSION_ID "1.36.0.0"
+!define PRODUCT_VERSION "1.37"
+!define PRODUCT_VERSION_ID "1.37.0.0"
 !define PRODUCT_PUBLISHER "The Geany developer team"
 !define PRODUCT_WEB_SITE "https://www.geany.org/"
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
 !define PRODUCT_DIR_REGKEY "Software\Geany-Plugins"
 !define GEANY_DIR_REGKEY "Software\Geany"
-!define REQUIRED_GEANY_VERSION "1.36.0"
+!define REQUIRED_GEANY_VERSION "1.37.0"
 !define RESOURCEDIR "geany-plugins-${PRODUCT_VERSION}"
 
 ;;;;;;;;;;;;;;;;;;;;;
@@ -51,12 +53,13 @@ VIAddVersionKey "ProductVersion" "${PRODUCT_VERSION}"
 VIAddVersionKey "LegalCopyright" "Copyright 2009-2019 by the Geany developer team"
 VIAddVersionKey "FileDescription" "${PRODUCT_NAME} Installer"
 
-BrandingText "$(^NAME) installer (NSIS 2.51)"
+BrandingText "$(^NAME) installer (NSIS 3.04)"
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
 SetCompressor /SOLID lzma
 ShowInstDetails hide
 ShowUnInstDetails hide
 XPStyle on
+ManifestSupportedOS all
 OutFile "geany-plugins-${PRODUCT_VERSION}_setup.exe"
 
 Var Answer
@@ -69,10 +72,10 @@ Var UNINSTDIR
 !include "MUI2.nsh"
 
 ;Reserve files used in .onInit, for faster start-up
-ReserveFile "${NSISDIR}\Plugins\System.dll"
-ReserveFile "${NSISDIR}\Plugins\UserInfo.dll"
-ReserveFile "${NSISDIR}\Plugins\InstallOptions.dll"
-ReserveFile "${NSISDIR}\Plugins\LangDLL.dll"
+ReserveFile "${NSISDIR}\Plugins\x86-unicode\System.dll"
+ReserveFile "${NSISDIR}\Plugins\x86-unicode\UserInfo.dll"
+ReserveFile "${NSISDIR}\Plugins\x86-unicode\InstallOptions.dll"
+ReserveFile "${NSISDIR}\Plugins\x86-unicode\LangDLL.dll"
 
 !define MUI_ABORTWARNING
 ; FIXME hard-coded path...should we add geany.ico to the geany-plugins repo?
