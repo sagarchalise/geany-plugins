@@ -413,7 +413,7 @@ select_or_match_tag (gboolean select)
     gint cur_line;
     gint jump_line=0, select_start=0, select_end=0;
     GeanyDocument *doc = document_get_current();
-    if(highlightedBrackets[0] != highlightedBrackets[2] && highlightedBrackets[0] != 0){
+    if(highlightedBrackets[0] != highlightedBrackets[2]){
         cur_line = sci_get_current_position(doc->editor->sci);
         if(cur_line >= highlightedBrackets[0] && cur_line <= highlightedBrackets[1]){
             if (!select){
@@ -426,8 +426,8 @@ select_or_match_tag (gboolean select)
             }
         }
         if(select){
-            select_end = highlightedBrackets[3]+1;
-            select_start = highlightedBrackets[0];
+            select_end = (highlightedBrackets[0] < highlightedBrackets[2])?highlightedBrackets[3]+1:highlightedBrackets[0]-1;
+            select_start = (highlightedBrackets[0] < highlightedBrackets[2])?highlightedBrackets[0]-1:highlightedBrackets[3]+1;
         }
     }
     if (select){
