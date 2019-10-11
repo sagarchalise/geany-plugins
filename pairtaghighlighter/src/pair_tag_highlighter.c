@@ -426,8 +426,8 @@ select_or_match_tag (gboolean select)
             }
         }
         if(select){
-            select_end = (highlightedBrackets[0] < highlightedBrackets[2])?highlightedBrackets[3]+1:highlightedBrackets[0]-1;
-            select_start = (highlightedBrackets[0] < highlightedBrackets[2])?highlightedBrackets[0]-1:highlightedBrackets[3]+1;
+            select_end = (highlightedBrackets[0] < highlightedBrackets[2])?highlightedBrackets[3]+1:highlightedBrackets[1]+1;
+            select_start = (highlightedBrackets[0] < highlightedBrackets[2])?highlightedBrackets[0]:highlightedBrackets[2];
         }
     }
     if (select){
