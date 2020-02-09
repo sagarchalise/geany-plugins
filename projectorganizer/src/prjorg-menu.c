@@ -126,7 +126,6 @@ static gboolean try_swap_header_source(gchar *utf8_file_name, gboolean is_header
 	return found;
 }
 
-
 static void on_swap_header_source(G_GNUC_UNUSED GtkMenuItem * menuitem, G_GNUC_UNUSED gpointer user_data)
 {
 	GSList *header_patterns, *source_patterns;
@@ -459,6 +458,37 @@ on_entry_text_notify (GObject    *object,
   }
 }
 static void
+fill_store (GtkListStore *store)
+{
+	//gchar *root_path = get_project_base_path();
+	GSList *elem = NULL;
+	foreach_slist (elem, prj_org->roots)
+	{
+		GHashTableIter iter;
+		gpointer key, value;
+		PrjOrgRoot *root = elem->data;
+		g_hash_table_iter_init(&iter, root->file_table);
+		while (g_hash_table_iter_next(&iter, &key, &value))
+		{
+			gchar *name = g_path_get_basename(key);
+			gchar *label = g_markup_printf_escaped ("<big>%s</big>\n"
+                                            "<small><i>%s</i></small>",
+                                            name,
+                                           key);
+
+    
+	gtk_list_store_insert_with_values (store, NULL, -1,
+                                       COL_FILE_LABEL, label,
+                                       COL_FILE_NAME, key,
+                                       -1);
+		g_free (label);
+		g_free (name);
+		}
+
+}
+}
+
+static void
 create_panel (void)
 {
   GtkWidget          *frame;
@@ -488,6 +518,7 @@ create_panel (void)
   kb_find_file.store = gtk_list_store_new (COL_FILE_COUNT,
                                           G_TYPE_STRING,
                                           G_TYPE_STRING);
+  fill_store(kb_find_file.store);
   box = gtk_vbox_new (FALSE, 0);
   gtk_container_add (GTK_CONTAINER (frame), box);
   kb_find_file.entry = gtk_entry_new();
